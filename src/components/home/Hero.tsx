@@ -9,8 +9,10 @@ const Hero = () => {
             Life Is More <span className="text-text">Green</span> <br /> With
             <span className="text-text"> Greener</span>
           </h1>
-          <h3 className="text-2xl my-5 text-gray-500">Stay Positive, Stay Green</h3>
-          <div className="btn flex gap-1 items-center max-w-40 bg-primaryColor text-white">
+          <h3 className="text-2xl my-5 text-gray-500">
+            Stay Positive, Stay Green
+          </h3>
+          <div className="btn flex gap-1 items-center max-w-40 bg-primaryColor text-white ">
             <a href="">Discover</a>
             <FaArrowRight></FaArrowRight>
           </div>
