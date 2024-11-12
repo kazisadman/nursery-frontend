@@ -3,7 +3,7 @@ import CategoryCard from "../CategoryCard";
 
 const Category = () => {
     return (
-      <div className="my-16">
+      <div className="my-16 max-w-7xl mx-auto ">
         <div>
           <h1 className="text-5xl font-medium">
             Explore Our Diverse Plant
@@ -16,10 +16,12 @@ const Category = () => {
           </p>
         </div>
         <div className="grid grid-cols-4 gap-16 items-center">
-            <CategoryCard></CategoryCard>
-            <CategoryCard></CategoryCard>
-            <CategoryCard></CategoryCard>
-            <button className="btn btn-outline border-text w-40">Shop <FaArrowRight></FaArrowRight></button>
+          <CategoryCard></CategoryCard>
+          <CategoryCard></CategoryCard>
+          <CategoryCard></CategoryCard>
+          <button className="btn btn-outline border-text w-40">
+            Shop <FaArrowRight></FaArrowRight>
+          </button>
         </div>
       </div>
     );
