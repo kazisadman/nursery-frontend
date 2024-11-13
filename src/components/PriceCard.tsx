@@ -3,8 +3,8 @@ import { FaStarHalfStroke } from "react-icons/fa6";
 
 const PriceCard = () => {
   return (
-    <div className="card w-72 bg-base-100 shadow-xl">
-      <figure className="px-10 pt-10">
+    <div className="card bg-base-100 shadow-xl">
+      <figure className="px-5 pt-5">
         <img
           src="https://i.ibb.co.com/7NK5rY2/plant.png"
           alt="Shoes"
