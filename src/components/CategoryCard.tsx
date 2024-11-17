@@ -5,7 +5,7 @@ const CategoryCard: React.FC<TCard> = ({ data }) => {
   return (
     <div>
       <div className="card bg-base-100 shadow-xl">
-        <figure className="px-10 pt-10">
+        <figure className="px-10 pt-10 h-64">
           <img src={image} alt="Shoes" className="w-[260px]" />
         </figure>
         <div className="card-body items-center text-center">

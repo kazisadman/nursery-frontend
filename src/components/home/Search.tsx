@@ -1,6 +1,40 @@
 import { FaSearch } from "react-icons/fa";
+import {
+  useGetAllProductQuery,
+  useGetProductByKeywordQuery,
+} from "../../api/product";
+import { Link } from "react-router-dom";
+import { TResponse } from "../../types/product";
+import { useState } from "react";
 
 const Search = () => {
+  const [query, setQuery] = useState("");
+
+  const { data } = useGetAllProductQuery() as { data: TResponse };
+  const { data: searchData, refetch } = useGetProductByKeywordQuery(query);
+  console.log(searchData);
+
+  const products = data?.data;
+  const categoryName: string[] = [];
+
+  const getCategoryName = () => {
+    for (const item in products) {
+      if (!categoryName.includes(products[item]?.category)) {
+        categoryName.push(products[item]?.category);
+      }
+    }
+  };
+
+  getCategoryName();
+
+  const handleSearchForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target;
+    const query = form.query.value;
+    setQuery(query);
+    refetch();
+  };
+
   return (
     <div className="relative overflow-hidden">
       <div className="max-w-3xl mx-auto my-44">
@@ -18,22 +52,29 @@ const Search = () => {
           src="https://i.ibb.co.com/6W2Z8YW/search-left.png"
           alt=""
         />
-        <label className="flex items-center mx-auto bg-text w-[623px] rounded-lg mb-10">
+        <form
+          className="flex items-center mx-auto bg-text w-[623px] rounded-lg mb-10"
+          onSubmit={handleSearchForm}
+        >
           <input
             className=" border-2 px-3 rounded-s-lg focus:outline-none focus:border-text h-[72px] w-full "
             type="text"
-            name=""
+            name="query"
             id=""
             placeholder="Search"
           />
-          <FaSearch className="text-2xl bg-text text-white w-[85px]"></FaSearch>
-        </label>
+          <button type="submit">
+            <FaSearch className="text-2xl bg-text text-white w-[85px] cursor-pointer"></FaSearch>
+          </button>
+        </form>
         <div className="flex items-center gap-4 justify-center">
           <p>Suggestions:</p>
           <div className="flex justify-around gap-2">
-            <p className="btn">Indoor plants</p>
-            <p className="btn">Indoor plants</p>
-            <p className="btn">Indoor plants</p>
+            {categoryName.slice(0, 3).map((item) => (
+              <Link to={`/shop/${item}`} className="btn">
+                {item}
+              </Link>
+            ))}
           </div>
         </div>
         <img

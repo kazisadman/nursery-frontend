@@ -13,3 +13,10 @@ export type TProduct = {
 export type TCard = {
   data: TProduct;
 };
+
+export type TResponse = {
+  statusCode: number;
+  success: string;
+  data: TProduct[];
+  message: string;
+};

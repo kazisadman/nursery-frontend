@@ -1,11 +1,16 @@
+import { useGetAllProductQuery } from "../api/product";
 import PopularCard from "../components/PopularCard";
 import PriceCard from "../components/PriceCard";
 import Filter from "../components/product/Filter";
 import Hero from "../components/product/Hero";
 import SearchAndSort from "../components/product/SearchAndSort";
 import { LuSettings2 } from "react-icons/lu";
+import { TProduct } from "../types/product";
 
 const Product = () => {
+    const { data } = useGetAllProductQuery();
+    const products = data?.data;
+
   return (
     <div>
       <Hero></Hero>
@@ -17,14 +22,9 @@ const Product = () => {
             <div>
               <p className="text-2xl font-medium mb-6">All Products</p>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 items-center">
-                <PriceCard></PriceCard>
-                <PriceCard></PriceCard>
-                <PriceCard></PriceCard>
-                <PriceCard></PriceCard>
-                <PriceCard></PriceCard>
-                <PriceCard></PriceCard>
-                <PriceCard></PriceCard>
-                <PriceCard></PriceCard>
+                {products?.map((item: TProduct) => (
+                  <PriceCard key={item?._id} data={item}></PriceCard>
+                ))}
               </div>
             </div>
 

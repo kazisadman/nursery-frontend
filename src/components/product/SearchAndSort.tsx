@@ -3,8 +3,8 @@ const SearchAndSort = () => {
     return (
       <div className="flex justify-end max-w-7xl mx-auto my-5">
         <div className="flex items-center gap-4">
-          <label className="input input-bordered flex items-center gap-2">
-            <input type="text" className="grow" placeholder="Search" />
+          <form className="input input-bordered flex items-center gap-2">
+            <input type="text" name='query' className="grow" placeholder="Search" />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -17,7 +17,7 @@ const SearchAndSort = () => {
                 clipRule="evenodd"
               />
             </svg>
-          </label>
+          </form>
           <select className="select border-text w-full max-w-28">
             <option disabled selected>
               Sort by

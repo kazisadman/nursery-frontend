@@ -1,11 +1,12 @@
 import { FaArrowRight } from "react-icons/fa";
 import CategoryCard from "../CategoryCard";
 import { useGetAllProductQuery } from "../../api/product";
-import { TProduct } from "../../types/product";
+import { TProduct, TResponse } from "../../types/product";
+import { Link } from "react-router-dom";
 
 const Category = () => {
-  const { data } = useGetAllProductQuery();
-  const products: TProduct[] | undefined = data?.data;
+  const { data } = useGetAllProductQuery() as { data: TResponse };
+  const products = data?.data;
 
   const categories: TProduct[] = [];
 
@@ -33,9 +34,9 @@ const Category = () => {
         {categories?.slice(0, 3).map((item) => (
           <CategoryCard key={item?._id} data={item}></CategoryCard>
         ))}
-        <button className="btn btn-outline border-text w-40">
+        <Link to="/shop" className="btn btn-outline border-text w-40">
           Shop <FaArrowRight></FaArrowRight>
-        </button>
+        </Link>
       </div>
     </div>
   );
