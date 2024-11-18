@@ -6,10 +6,28 @@ import Hero from "../components/product/Hero";
 import SearchAndSort from "../components/product/SearchAndSort";
 import { LuSettings2 } from "react-icons/lu";
 import { TProduct } from "../types/product";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import { useEffect } from "react";
+import usePopularProduct from "../hooks/usePopularProduct";
 
 const Product = () => {
-    const { data } = useGetAllProductQuery();
-    const products = data?.data;
+  const categoryName = useSelector(
+    (state: RootState) => state.category.categoryName
+  );
+
+  const { data } = useGetAllProductQuery();
+  const products = data?.data;
+
+  const categoryData: TProduct[] = [];
+
+  const popular = usePopularProduct();
+
+  for (const item in products) {
+    if (products[item]?.category === categoryName) {
+      categoryData.push(products[item]);
+    }
+  }
 
   return (
     <div>
@@ -20,11 +38,19 @@ const Product = () => {
           <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content flex flex-col-reverse items-center justify-center">
             <div>
-              <p className="text-2xl font-medium mb-6">All Products</p>
+              {categoryName ? (
+                <p className="text-2xl font-medium mb-6">{categoryName}</p>
+              ) : (
+                <p className="text-2xl font-medium mb-6">All Products</p>
+              )}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 items-center">
-                {products?.map((item: TProduct) => (
-                  <PriceCard key={item?._id} data={item}></PriceCard>
-                ))}
+                {categoryName
+                  ? categoryData?.map((item: TProduct) => (
+                      <PriceCard key={item?._id} data={item}></PriceCard>
+                    ))
+                  : products?.map((item: TProduct) => (
+                      <PriceCard key={item?._id} data={item}></PriceCard>
+                    ))}
               </div>
             </div>
 
@@ -46,9 +72,9 @@ const Product = () => {
               <div className="mt-14">
                 <p className="text-xl font-medium mb-4">Popular</p>
                 <div className="flex flex-col gap-10">
-                  <PopularCard></PopularCard>
-                  <PopularCard></PopularCard>
-                  <PopularCard></PopularCard>
+                  {popular?.slice(0, 4).map((item) => (
+                    <PopularCard key={item?._id} data={item}></PopularCard>
+                  ))}
                 </div>
               </div>
             </ul>

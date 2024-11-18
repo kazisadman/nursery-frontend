@@ -1,36 +1,24 @@
 import { FaSearch } from "react-icons/fa";
-import {
-  useGetAllProductQuery,
-  useGetProductByKeywordQuery,
-} from "../../api/product";
+import { useGetProductByKeywordQuery } from "../../api/product";
 import { Link } from "react-router-dom";
-import { TResponse } from "../../types/product";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const Search = () => {
   const [query, setQuery] = useState("");
 
-  const { data } = useGetAllProductQuery() as { data: TResponse };
+  const categoryNames = useSelector(
+    (state: RootState) => state.category.categoryNames
+  );
+
   const { data: searchData, refetch } = useGetProductByKeywordQuery(query);
   console.log(searchData);
 
-  const products = data?.data;
-  const categoryName: string[] = [];
-
-  const getCategoryName = () => {
-    for (const item in products) {
-      if (!categoryName.includes(products[item]?.category)) {
-        categoryName.push(products[item]?.category);
-      }
-    }
-  };
-
-  getCategoryName();
-
   const handleSearchForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.target;
-    const query = form.query.value;
+    const form = e.target as HTMLFormElement;
+    const query = (form.elements.namedItem("query") as HTMLFormElement).value;
     setQuery(query);
     refetch();
   };
@@ -70,7 +58,7 @@ const Search = () => {
         <div className="flex items-center gap-4 justify-center">
           <p>Suggestions:</p>
           <div className="flex justify-around gap-2">
-            {categoryName.slice(0, 3).map((item) => (
+            {categoryNames.slice(0, 3).map((item) => (
               <Link to={`/shop/${item}`} className="btn">
                 {item}
               </Link>

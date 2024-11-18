@@ -1,15 +1,28 @@
 import { FaArrowRight } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { setCategoryName } from "../../app/features/categorySlice";
 
 const Filter = () => {
+  const dispatch = useDispatch();
+
+  const categoryNames = useSelector(
+    (state: RootState) => state.category.categoryNames
+  );
+
   return (
     <div>
       <div className="mb-10">
         <p className="text-2xl font-medium mb-6">Categories</p>
         <ul className="text-xl">
-          <li>Air-Purifying Plants</li>
-          <li>Air-Purifying Plants</li>
-          <li>Air-Purifying Plants</li>
-          <li>Air-Purifying Plants</li>
+          {categoryNames.map((item) => (
+            <li
+              className="cursor-pointer"
+              onClick={() => dispatch(setCategoryName(item))}
+            >
+              {item}
+            </li>
+          ))}
         </ul>
       </div>
       <div>

@@ -17,8 +17,8 @@ const PriceCard:React.FC<TCard> = ({ data }) => {
           <FaStar></FaStar>
           <FaStarHalfStroke></FaStarHalfStroke>
         </div>
-        <div className="flex justify-between items-center">
-          <p className="text-3xl text-gray-500">${price}</p>
+        <div className="flex justify-between items-center gap-2">
+          <p className="text-2xl text-gray-500">${price}</p>
           <button className="btn bg-text text-white">Buy Now</button>
         </div>
       </div>
