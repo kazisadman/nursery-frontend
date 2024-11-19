@@ -1,12 +1,16 @@
 import { FaSearch } from "react-icons/fa";
 import { useGetProductByKeywordQuery } from "../../api/product";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCategoryName } from "../../app/features/categorySlice";
 
 const Search = () => {
   const [query, setQuery] = useState("");
+
+  const dispatch = useDispatch();
 
   const categoryNames = useSelector(
     (state: RootState) => state.category.categoryNames
@@ -59,7 +63,11 @@ const Search = () => {
           <p>Suggestions:</p>
           <div className="flex justify-around gap-2">
             {categoryNames.slice(0, 3).map((item) => (
-              <Link to={`/shop/${item}`} className="btn">
+              <Link
+                onClick={() => dispatch(setCategoryName(item))}
+                to={`/shop`}
+                className="btn"
+              >
                 {item}
               </Link>
             ))}

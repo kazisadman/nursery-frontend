@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useGetAllProductQuery } from "../../api/product";
 import { TProduct } from "../../types/product";
 import PriceCard from "../PriceCard";
@@ -14,9 +15,9 @@ const Collection = () => {
             Discover our stunning collection of plants
           </p>
         </div>
-        <div>
+        <Link to={'/shop'}>
           <button className="btn btn-outline border-text w-40">View All</button>
-        </div>
+        </Link>
       </div>
       <div className="grid grid-cols-4 gap-8 items-center">
         {products?.slice(0,8).map((item:TProduct) => (

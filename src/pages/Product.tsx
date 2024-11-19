@@ -8,26 +8,40 @@ import { LuSettings2 } from "react-icons/lu";
 import { TProduct } from "../types/product";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
-import { useEffect } from "react";
 import usePopularProduct from "../hooks/usePopularProduct";
 
 const Product = () => {
   const categoryName = useSelector(
     (state: RootState) => state.category.categoryName
   );
+  const maxPrice = useSelector((state: RootState) => state.price.maxPrice);
+  const minPrice = useSelector((state: RootState) => state.price.minPrice);
 
   const { data } = useGetAllProductQuery();
   const products = data?.data;
 
-  const categoryData: TProduct[] = [];
+  let filteredData: TProduct[] | undefined = [];
+
+  if (categoryName && filteredData?.length === 0) {
+    filteredData = products?.filter((item) => item?.category === categoryName);
+  } else {
+    filteredData = filteredData?.filter(
+      (item) => item?.category === categoryName
+    );
+  }
+
+  if ((minPrice || maxPrice) && filteredData?.length === 0) {
+    filteredData = products?.filter(
+      (item) => item?.price >= minPrice && item?.price <= maxPrice
+    );
+    console.log(minPrice, maxPrice);
+  } else {
+    filteredData = filteredData?.filter(
+      (item) => item?.price >= minPrice && item?.price <= maxPrice
+    );
+  }
 
   const popular = usePopularProduct();
-
-  for (const item in products) {
-    if (products[item]?.category === categoryName) {
-      categoryData.push(products[item]);
-    }
-  }
 
   return (
     <div>
@@ -44,8 +58,8 @@ const Product = () => {
                 <p className="text-2xl font-medium mb-6">All Products</p>
               )}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 items-center">
-                {categoryName
-                  ? categoryData?.map((item: TProduct) => (
+                {categoryName || minPrice || maxPrice
+                  ? filteredData?.map((item: TProduct) => (
                       <PriceCard key={item?._id} data={item}></PriceCard>
                     ))
                   : products?.map((item: TProduct) => (
