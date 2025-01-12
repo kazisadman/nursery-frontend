@@ -3,12 +3,14 @@ import { productApi } from "../api/product";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import categoryReducer from "./features/categorySlice";
 import priceReducer from "./features/priceSlice";
+import sortReducer from "./features/sortingSlice";
 
 export const store = configureStore({
   reducer: {
     [productApi.reducerPath]: productApi.reducer,
     category: categoryReducer,
     price: priceReducer,
+    sorting: sortReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

@@ -14,8 +14,13 @@ const Product = () => {
   const categoryName = useSelector(
     (state: RootState) => state.category.categoryName
   );
+
   const maxPrice = useSelector((state: RootState) => state.price.maxPrice);
   const minPrice = useSelector((state: RootState) => state.price.minPrice);
+
+  const sortByOption = useSelector((state: RootState) => state.sorting.option);
+
+  console.log(sortByOption);
 
   const { data } = useGetAllProductQuery();
   const products = data?.data;
@@ -34,14 +39,23 @@ const Product = () => {
     filteredData = products?.filter(
       (item) => item?.price >= minPrice && item?.price <= maxPrice
     );
-    console.log(minPrice, maxPrice);
   } else {
     filteredData = filteredData?.filter(
       (item) => item?.price >= minPrice && item?.price <= maxPrice
     );
   }
+  // console.log(filteredData?.length);
 
   const popular = usePopularProduct();
+
+  if (sortByOption === "alphabetic") {
+    filteredData?.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (sortByOption === "acending") {
+    filteredData?.sort((a, b) => a.price - b.price);
+  } else if (sortByOption === "decending") {
+    filteredData?.sort((a, b) => b.price - a.price);
+  }
+  console.log(filteredData);
 
   return (
     <div>
